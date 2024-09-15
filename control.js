@@ -1,71 +1,110 @@
 const addTask=document.querySelector('.add')
 const input=document.querySelector('.task')
 const ListParent=document.querySelector('.Taks')
+const form=document.querySelector('form')
+const reset=document.querySelector('.Reset')
+
 
 const elemnt=document.querySelector('.elemnt')
-let ismodifie=false
+
+class TASK{
+  tasks=[]
+  ismodifie=false
+  constructor(){
+    this.GetStorage()
+    addTask.addEventListener('click',this.askFor.bind(this))
+    form.addEventListener('submit', this.getInput.bind(this))
+    reset.addEventListener('click',this.ResetStorage.bind(this))
 
 
-addTask.addEventListener('click',function(){
+
+  }
+
+
+
+ askFor(){
+    
     input.classList.toggle('hidden')
     addTask.classList.toggle('hidden')
-    ismodifie=false
+    this.ismodifie=false
     
-})
+}
+ 
 
+  getInput(e){
+    e.preventDefault()
+    this.ismodifie=false
     
-input.addEventListener("keypress",function(k){
-    
-    if(k.key==='Enter'){
-        k.preventDefault()
-        ismodifie=false
-    
-    var textvalue=document.querySelector('input').value
+    var textvalue=input.value
     if(textvalue!==''){
-    generateElemnt(textvalue)
+    this.generateElemnt(textvalue)
+    this.tasks.push(textvalue)
     
+    this.local()
+  
     input.classList.toggle('hidden')
     addTask.classList.toggle('hidden')
    input.value='';
+   
     
-    }else(
-        console.error("NO input")
-    )
-}
+    }else{
+      input.classList.toggle('hidden')
+    addTask.classList.toggle('hidden')
+    }}
+  
+  
+
     
     
     
-})
-const generateElemnt=function(value){
+
+
+  generateElemnt=function(value){
     const markup=`
     <li class='elemnt'>
           ${value} <span><button class="Delete"><i class="fa-solid fa-trash-can" style="color: #ff0000;"></i></button> <button class="modifie"><i class="fa-solid fa-pen"></i></button></span>
         </li>
     `
     ListParent.innerHTML+=markup
-    attachListeners()
+    this.attachListeners()
     
+    
+  
+  }
 
-}
 
-
-const attachListeners = function () {
+  attachListeners  () {
     const deleteButtons = document.querySelectorAll('.Delete');
     const modifyButtons = document.querySelectorAll('.modifie');
+    let taskarr=this.tasks
+    
 
     deleteButtons.forEach(button => {
       button.addEventListener('click', function () {
         const listItem = this.closest('li');
+        var index=taskarr.indexOf(listItem.firstChild.textContent)
         listItem.remove(); 
+        taskarr.splice(index,1) 
+        console.log(taskarr)
+        
+        
+        
+        
       });
-    });
+      this.tasks=taskarr
+      this.local()
+    console.log(this.tasks)});
+    
+    
+    
 
   
     
     modifyButtons.forEach(button => {
         button.addEventListener('click', function () {
-          if (!ismodifie) {
-            ismodifie = true;
+          if (!this.ismodifie) {
+            this.ismodifie = true;
+           
             
             
             const listItem = this.closest('li');
@@ -75,6 +114,7 @@ const attachListeners = function () {
             const input = document.createElement('input');
             input.type = 'text';
             input.value = currentText;
+            let index=taskarr.indexOf(input.value)
       
             
             listItem.firstChild.remove();
@@ -88,7 +128,7 @@ const attachListeners = function () {
             
             input.addEventListener('keypress', function (event) {
               if (event.key === 'Enter') {
-                ismodifie = false; 
+                this.ismodifie = false; 
                 const newText = input.value;
       
                 if (newText !== '') {
@@ -96,10 +136,62 @@ const attachListeners = function () {
                   input.remove();
                   const textNode = document.createTextNode(newText);
                   listItem.insertBefore(textNode, listItem.firstChild);
+                  taskarr[index]=newText;
+                  
+                  
                 }
               }
             });
           }
         });
-      });
+      this.tasks=taskarr
+      this.local()});
     }
+
+
+    local(){
+      localStorage.setItem('Task',JSON.stringify(this.tasks))
+    }
+
+    GetStorage(){
+      const data=JSON.parse(localStorage.getItem('Task'))
+      if(!data) return
+      this.tasks=data;
+      this.tasks.forEach(task=>{ this.generateElemnt(task)})
+
+      
+    }
+
+    removeFromStorage(){
+      localStorage.removeItem('Task')
+    }
+
+    ResetStorage(){
+      this.tasks = [];
+      this.local()
+      location.reload()
+    }
+
+
+
+
+  }
+
+
+
+const task=new TASK()
+
+    
+
+
+
+
+
+  
+  
+  
+ 
+
+
+
+ 
