@@ -80,19 +80,19 @@ class TASK{
     
 
     deleteButtons.forEach(button => {
-      button.addEventListener('click', function () {
-        const listItem = this.closest('li');
-        var index=taskarr.indexOf(listItem.firstChild.textContent)
+      button.addEventListener('click', () =>{
+        const listItem = button.closest('li');
+        var index=this.tasks.indexOf(listItem.firstChild.textContent)
         listItem.remove(); 
-        taskarr.splice(index,1) 
+        this.tasks.splice(index,1) 
+        this.local()
         console.log(taskarr)
         
         
         
         
-      });
-      this.tasks=taskarr
-      this.local()
+   });
+     
     console.log(this.tasks)});
     
     
@@ -101,20 +101,20 @@ class TASK{
   
     
     modifyButtons.forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click',  ()=> {
           if (!this.ismodifie) {
             this.ismodifie = true;
            
             
             
-            const listItem = this.closest('li');
+            const listItem = button.closest('li');
             const currentText = listItem.firstChild.textContent.trim();
             
            
             const input = document.createElement('input');
             input.type = 'text';
             input.value = currentText;
-            let index=taskarr.indexOf(input.value)
+            let index=this.tasks.indexOf(input.value)
       
             
             listItem.firstChild.remove();
@@ -126,7 +126,7 @@ class TASK{
             input.focus();
       
             
-            input.addEventListener('keypress', function (event) {
+            input.addEventListener('keypress', (event)=> {
               if (event.key === 'Enter') {
                 this.ismodifie = false; 
                 const newText = input.value;
@@ -136,16 +136,17 @@ class TASK{
                   input.remove();
                   const textNode = document.createTextNode(newText);
                   listItem.insertBefore(textNode, listItem.firstChild);
-                  taskarr[index]=newText;
+                  this.tasks[index]=newText;
+                  this.local()
+                
                   
                   
                 }
               }
             });
           }
-        });
-      this.tasks=taskarr
-      this.local()});
+          });
+      });
     }
 
 
