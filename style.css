@@ -59,9 +59,10 @@ li {
 
 .task {
     background-color: #f8f8f8;
-    width: 100%;
-    height: 30px;
+    width:300px ;
+    height: 50px;
     border-radius: 12px;
+    overflow-wrap: break-word;
 }
 
 .Delete,
@@ -104,15 +105,17 @@ button {
     background-color: red;
 }
 
-.btns {
-    display: block;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -0%);
-}
+
 
 @media (max-width: 500px) {
     .list {
         width: 350px;
+    }
+    .task{
+        width: 250px;
+        height: 30px;
+    }
+    li{
+        font-size: 15px;
     }
 }
