@@ -62,7 +62,7 @@ class TASK{
   generateElemnt=function(value){
     const markup=`
     <li class='elemnt'>
-          ${value} <span><button class="Delete"><i class="fa-solid fa-trash-can" style="color: #ff0000;"></i></button> <button class="modifie"><i class="fa-solid fa-pen"></i></button></span>
+          ${value} <span class="btns"><button class="Delete"><i class="fa-solid fa-trash-can" style="color: #ff0000;"></i></button> <button class="modifie"><i class="fa-solid fa-pen"></i></button></span>
         </li>
     `
     ListParent.innerHTML+=markup

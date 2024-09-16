@@ -33,8 +33,9 @@ h1 {
     transition-duration: 1000ms;
 }
 
-.add:hover {
-    background-color: #22ff00;
+.add:hover,.add .fa-plus:hover {
+    color: #ffffff;
+    background-color: rgb(29, 29, 118);
 }
 
 ul {
@@ -43,6 +44,8 @@ ul {
     padding: 0;
     gap: 20px;
     width: 100%;
+    overflow-y: scroll;
+    height: 400px;
 }
 
 li {
@@ -72,9 +75,10 @@ li {
     border: none;
     margin: 10px;
     float: right;
+    
 }
 
-.Delete:hover,  .fa-solid:hover{
+.Delete:hover,  .fa-trash-can:hover{
    color: #ffffff !important;
    background-color: #ff0000;
 }
@@ -99,15 +103,20 @@ button {
     border: none;
     transition-duration: 1000ms;
     font-size: 20px;
+    
 }
 
 .Reset:hover {
     background-color: red;
+    color: #ffffff;
+}
+li:first-child{
+    display: block;
 }
 
 
 
-@media (max-width: 500px) {
+@media (max-width: 500px) { 
     .list {
         width: 350px;
     }
@@ -117,5 +126,8 @@ button {
     }
     li{
         font-size: 15px;
+    }
+    .bnts{
+        display: block;
     }
 }
